@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+    <h1>Refund payment</h1>
+
+    <form action="/refund" method="POST">
+        <input title="transactionID" name="transactionID" type="text" id="transactionID">
+        <button type="submit" class="btn btn-info">Request Refund</button>
+    </form>
+
+    <a href="/" class="btn btn-secondary ">&lt;&lt;back</a>
+</div>
+
+
+{% endblock %}

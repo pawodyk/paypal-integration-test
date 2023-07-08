@@ -4,6 +4,7 @@
     <div class="col">
         <h1 class="display-4">Checkout</h1>
     </div>
+    <div id="result"></div>
     <div id="dropin-container"></div>
 </div>
 <div class="row m-1">
@@ -32,21 +33,35 @@
             dropinUi.requestPaymentMethod(function (requestErr, payload) {
                 if (requestErr) alert(requestErr)
                 else {
-                    console.log(payload)
+                    
                     $.ajax({
                         type: "POST",
                         url: '/payment',
                         data: JSON.stringify(payload),
                         contentType: 'application/json; charset=utf-8',
                         dataType: 'json',
-                        complete: function () {
+                        // complete: function () {
+                        //     dropinUi.teardown();
+                        //     $('#submit-button').remove();
+                        //     $("#dropin-container").html(
+                        //         `<div class="alert alert-success" role="alert">Transaction submitted, please wait</div>`
+                        //     )
+                        // },
+                        success: function(result) {
                             dropinUi.teardown();
                             $('#submit-button').remove();
-                            $("#dropin-container").html(
-                                `<div class="alert alert-success" role="alert">Transaction submitted, please wait</div>`
-                            )
+                            $('#result').html(
+                                `<div class="alert alert-success" role="alert">Transaction submitted, your transaction ID ${result["transactionID"]}</div>`
+                            );
+                        },
+                        error: function(result, status, error){
+                            $('#submit-button').remove();
+                            $('#result').html(
+                                `<div class="alert alert-danger" role="alert">Transaction submitted, your transaction ID ${result["transactionID"]}</div>`
+                            );
                         }
                     })
+                    
                 }
             })
         })
