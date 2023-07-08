@@ -1,13 +1,28 @@
 {% extends 'base.html' %} {% block content %}
 
 <div class="container">
+
+
     <h1>Refund payment</h1>
 
     <form action="/refund" method="POST">
-        <input title="transactionID" name="transactionID" type="text" id="transactionID">
+        <input title="transactionID" name="transactionID" type="text" id="transactionID" required="required" pattern="[A-Za-z0-9]{8}">
         <button type="submit" class="btn btn-info">Request Refund</button>
     </form>
-
+    {%if data%}
+        {%if data.status == "success"%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Transaction refund requested successfuly
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {%if data.status in ["fail", "exception"]%}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Transaction refund requested failed due to Error: {{data.Error}}.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+    {% endif %}
     <a href="/" class="btn btn-secondary ">&lt;&lt;back</a>
 </div>
 

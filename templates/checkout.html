@@ -51,14 +51,17 @@
                             dropinUi.teardown();
                             $('#submit-button').remove();
                             $('#result').html(
-                                `<div class="alert alert-success" role="alert">Transaction submitted, your transaction ID ${result["transactionID"]}</div>`
+                                `<div class="alert alert-success" role="alert">Transaction submitted, your transaction ID <span></span></div>`
                             );
+                            $("#result span").text(result.transactionID)
                         },
                         error: function(result, status, error){
+                            console.log(result,status,error)
                             $('#submit-button').remove();
                             $('#result').html(
-                                `<div class="alert alert-danger" role="alert">Transaction submitted, your transaction ID ${result["transactionID"]}</div>`
+                                `<div class="alert alert-danger" role="alert">Transaction Failed: <span></span></div>`
                             );
+                            $("#result span").text(result.responseJSON.error_text)
                         }
                     })
                     
