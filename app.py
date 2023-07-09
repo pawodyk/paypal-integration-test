@@ -32,7 +32,6 @@ def process_payment():
   try:
     result = gateway.transaction.sale({
         "amount": "10.00",
-        "currency": 'EUR',
         "payment_method_nonce": payload["nonce"],
         "options": {
           "submit_for_settlement": True
@@ -59,7 +58,7 @@ def process_payment():
       return {"status": result.transaction.status, "error_text": errortxt}, 403
 
   except Exception as ex:
-    # print(ex)
+    # print("Exception occured during processing transaction:",ex)
     return "exception", 500 
   
 
