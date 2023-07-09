@@ -32,13 +32,14 @@ def process_payment():
   try:
     result = gateway.transaction.sale({
         "amount": "10.00",
+        "currency": 'EUR',
         "payment_method_nonce": payload["nonce"],
         "options": {
           "submit_for_settlement": True
         }
     })
     if result.is_success:
-      print("successful payment", result.transaction.id)
+      # print("successful payment", result.transaction.id)
       # return redirect(url_for(payment_success))
       return {"status": "success", "transactionID": result.transaction.id}, 201
     else:
@@ -58,7 +59,7 @@ def process_payment():
       return {"status": result.transaction.status, "error_text": errortxt}, 403
 
   except Exception as ex:
-    print(ex)
+    # print(ex)
     return "exception", 500 
   
 
@@ -89,9 +90,9 @@ def refund_payment():
     result = gateway.transaction.refund(transactionID)
     if(result.transaction):
       if result.is_success:
-        print(result.transaction.status)
-        print(result.transaction.processor_response_code)
-        print(result.transaction.processor_response_text)
+        # print(result.transaction.status)
+        # print(result.transaction.processor_response_code)
+        # print(result.transaction.processor_response_text)
         data["status"] = "success"
       
       else:
@@ -103,7 +104,7 @@ def refund_payment():
     data["status"] = "exception"
     data['Error'] = str(ex)
     
-  print(data)  
+  # print(data)  
   return render_template("refund.html", data = data)
 
 if __name__ == "__main__":

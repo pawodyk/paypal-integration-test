@@ -25,7 +25,7 @@
         paypal: {
             flow: 'checkout',
             amount: '10.00',
-            currency: 'USD'
+            currency: 'EUR'
         }
     }, function (createErr, dropinUi) {
         $("#submit-button").on("click", function () {
@@ -56,7 +56,6 @@
                             $("#result span").text(result.transactionID)
                         },
                         error: function(result, status, error){
-                            console.log(result,status,error)
                             $('#submit-button').remove();
                             $('#result').html(
                                 `<div class="alert alert-danger" role="alert">Transaction Failed: <span></span></div>`
@@ -64,7 +63,6 @@
                             $("#result span").text(result.responseJSON.error_text)
                         }
                     })
-                    
                 }
             })
         })
